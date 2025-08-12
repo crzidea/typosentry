@@ -1,0 +1,20 @@
+{
+  "name": "typosentry",
+  "version": "1.0.0",
+  "description": "A CLI tool for typo detection and correction using OpenAI's API",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsx main.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "openai": "^5.12.2",
+    "tsx": "^4.20.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.2.1"
+  }
+}
