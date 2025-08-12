@@ -4,6 +4,7 @@ import OpenAI from "openai";
 import { env } from "process";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { diff } from "./diff.ts";
 
 const openai = new OpenAI({
   apiKey: env.OPENAI_API_KEY,
@@ -27,11 +28,15 @@ const getStdin = async () => {
 };
 // Parse named argument --input or -i for input file path
 let inputFilePath: string | undefined = undefined;
+let showDiff: boolean = false;
 
 for (let i = 2; i < process.argv.length; i++) {
   if (process.argv[i] === "--file" || process.argv[i] === "-f") {
     inputFilePath = process.argv[i + 1];
     break;
+  }
+  if (process.argv[i] === "--diff" || process.argv[i] === "-d") {
+    showDiff = true;
   }
 }
 
@@ -58,4 +63,8 @@ const chatCompletion = await openai.chat.completions.create({
   model: env.OPENAI_MODEL,
 });
 
-console.log(chatCompletion.choices[0].message.content);
+if (showDiff) {
+  console.log(diff(content, chatCompletion.choices[0].message.content!));
+} else {
+  console.log(chatCompletion.choices[0].message.content);
+}

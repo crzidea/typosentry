@@ -9,6 +9,7 @@ The default `system-prompt.md` makes the assistant act as a careful copy editor 
 - **Input sources**: read from stdin (pipe) or a text file via `--file`/`-f`.
 - **Deterministic role**: loads the editing rules from `system-prompt.md`.
 - **Config via env**: API key, base URL, and model from environment variables.
+- **Optional diff output**: show character-level diffs with `--diff`/`-d`.
 
 ### Requirements
 
@@ -74,6 +75,35 @@ npm start -- -f test-prompts.txt
 Notes:
 - The extra `--` after `npm start` forwards flags to the underlying script.
 - Output is printed to stdout with no extra formatting.
+
+#### Diff mode
+
+Use `--diff` (or `-d`) to print a character-level diff between the input and the corrected output. This can be useful when you want to inspect exactly what changed.
+
+```bash
+# From stdin
+echo "i think this is fine , check https://example.com" | npm start -- --diff
+
+# From a file
+npm start -- --file test-prompts.txt --diff
+```
+
+Notes:
+- The diff is produced with the [`diff`](https://www.npmjs.com/package/diff) package using `diffChars`, and is printed as an array of change objects.
+- Each object contains `{ added?: boolean, removed?: boolean, value: string }`.
+- You can post-process or pretty-print this structure as needed for your workflow.
+
+Reference implementation used by the CLI:
+
+```ts
+// diff.ts
+import { diffChars } from 'diff';
+
+export function diff(a: string, b: string) {
+  const diff = diffChars(a, b);
+  return diff;
+}
+```
 
 ### System prompt
 
