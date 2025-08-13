@@ -112,6 +112,20 @@ Edit `system-prompt.md` to tweak editing rules. The default prompt:
 - Keeps URLs, emails, code, file paths, and hashtags/mentions unchanged.
 - Includes concise Chinese and English rules and examples.
 
+#### Tweaking the system prompt
+
+If the model output isn't matching your expectations, refine `system-prompt.md` iteratively:
+
+- Identify a concrete failure case (input → current output → desired output).
+- Ask an LLM to propose minimal, precise edits to `system-prompt.md` using a meta-prompt like:
+
+```markdown
+Given the input `<input>`, the output `<output>` should be `<expected>`. What minimal, precise changes should I make to the prompt to achieve this?
+```
+
+- Apply the suggested changes to `system-prompt.md`, keeping rules concise and testable.
+- Re-run the CLI with your example to validate; repeat until consistent.
+
 ### Examples
 
 ```bash
