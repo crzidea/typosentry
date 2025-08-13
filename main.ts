@@ -26,7 +26,7 @@ const getStdin = async () => {
     process.stdin.on("error", reject);
   });
 };
-// Parse named argument --input or -i for input file path
+// Parse named argument --file or -f for input file path
 let inputFilePath: string | undefined = undefined;
 let showDiff: boolean = false;
 
