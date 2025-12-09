@@ -50,7 +50,7 @@ if (inputFilePath) {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const pkgDir = __dirname;
 const systemPrompt = await readFile(
-  join(pkgDir, "system-prompt.md"),
+  join(pkgDir, "prompts/system-prompt.md"),
   "utf-8"
 );
 
